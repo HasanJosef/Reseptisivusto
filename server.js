@@ -143,7 +143,12 @@ app.get("/reseptit", async (req, res) => {
     }
 
     const vastaus = await axios.get(url);
-    const reseptit = vastaus.data.meals;
+    let reseptit = vastaus.data.meals;
+
+    if (!reseptit && haku) {
+      const ingredientResponse = await axios.get(`${API_BASE_URL}filter.php?i=${haku}`);
+      reseptit = ingredientResponse.data.meals;
+    }
 
     res.render("recipes", { reseptit });
   } catch (virhe) {
@@ -185,7 +190,7 @@ app.get("/resepti/:id", async (req, res) => {
 });
 
 app.get("/login", (req, res) => {
-  res.render("login");
+  res.render("login", { virhe: null });
 });
 
 app.listen(3000, () => console.log("Server running on port 3000"));
