@@ -1,0 +1,46 @@
+<%- include('partials/header') %>
+
+<main class="resepti-sivu">
+    <% if (resepti) { %>
+        <article class="resepti-esitys">
+            <div class="resepti-kuva">
+                <img src="<%= resepti.strMealThumb %>" alt="<%= resepti.strMeal %>">
+            </div>
+            
+            <div class="resepti-tiedot">
+                <h1><%= resepti.strMeal %></h1>
+                
+                <section class="ainesosat">
+                    <h2>Ainesosat</h2>
+                    <ul>
+                        <% resepti.ainekset.forEach(aines => { %>
+                            <li><%= aines.maara %> <%= aines.aines %></li>
+                        <% }); %>
+                    </ul>
+                </section>
+                
+                <section class="ohjeet">
+                    <h2>Valmistusohjeet</h2>
+                    <p><%= resepti.strInstructions.replace(/\r\n/g, '<br>') %></p>
+                </section>
+                
+                <% if (resepti.strYoutube) { %>
+                    <div class="video-linkki">
+                        <h2>Video-ohje</h2>
+                        <a href="<%= resepti.strYoutube %>" target="_blank">Katso YouTube-video</a>
+                    </div>
+                <% } %>
+                
+                <div class="arvostelut">
+                    <h2>Arvostelut</h2>
+                    <p class="keskiarvo">Keskiarvo: Tähdet tulevat sprintissä 3</p>
+                    <div class="arvostelulista">
+                        <p>Arvostelut tulevat sprintissä 3</p>
+                    </div>
+                </div>
+            </div>
+        </article>
+    <% } else { %>
+        <p class="virhe">Reseptiä ei löytynyt.</p>
+    <% } %>
+</main>

@@ -1,0 +1,18 @@
+<%- include('partials/header') %>
+
+<main class="reseptilista-sivu">
+    <h1>Löydetyt reseptit</h1>
+    
+    <% if (reseptit && reseptit.length > 0) { %>
+        <div class="resepti-lista">
+            <% reseptit.forEach(resepti => { %>
+                <a href="/resepti/<%= resepti.idMeal %>" class="resepti-kortti">
+                    <img src="<%= resepti.strMealThumb %>" alt="<%= resepti.strMeal %>">
+                    <h3><%= resepti.strMeal %></h3>
+                </a>
+            <% }); %>
+        </div>
+    <% } else { %>
+        <p class="ei-tuloksia">Ei reseptejä löytynyt. Kokeile toista hakusanaa.</p>
+    <% } %>
+</main> 

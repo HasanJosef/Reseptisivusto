@@ -1,0 +1,63 @@
+/* Reseptilistaus */
+.reseptilista-sivu {
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.ei-tuloksia {
+  text-align: center;
+  margin-top: 2rem;
+  font-size: 1.2rem;
+}
+
+/* Yksittäinen resepti */
+.resepti-sivu {
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.resepti-esitys {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.resepti-kuva img {
+  width: 100%;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.ainesosat ul {
+  list-style-type: none;
+  margin-top: 1rem;
+}
+
+.ainesosat li {
+  padding: 0.3rem 0;
+  border-bottom: 1px solid #eee;
+}
+
+.ohjeet {
+  margin-top: 2rem;
+  line-height: 1.6;
+}
+
+.video-linkki {
+  margin-top: 2rem;
+}
+
+.arvostelut {
+  margin-top: 3rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--paavari);
+}
+
+@media (max-width: 768px) {
+  .resepti-esitys {
+    grid-template-columns: 1fr;
+  }
+}
