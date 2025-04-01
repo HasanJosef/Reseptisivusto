@@ -7,7 +7,7 @@
         <div class="resepti-lista">
             <% reseptit.forEach(resepti => { %>
                 <a href="/resepti/<%= resepti.idMeal %>" class="resepti-kortti">
-                    <img src="<%= resepti.strMealThumb %>" alt="<%= resepti.strMeal %>">
+                    <h2><img src="<%= resepti.strMealThumb %>" alt="<%= resepti.strMeal %>"></h2>
                     <h3><%= resepti.strMeal %></h3>
                 </a>
             <% }); %>

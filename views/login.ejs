@@ -1,0 +1,17 @@
+<%- include('partials/header') %>
+
+<main class="login-sivu">
+    <h1>Kirjaudu</h1>
+    <section class="kirjautuminen">
+        <form action="/login" method="POST">
+            <label for="login-username">Käyttäjänimi:</label>
+            <input type="text" id="login-username" name="username" required>
+            
+            <label for="login-password">Salasana (valinnainen):</label>
+            <input type="password" id="login-password" name="password">
+            
+            <button type="submit">Kirjaudu</button>
+        </form>
+        <p>Eikö sinulla ole tiliä? <a href="/register">Rekisteröidy tästä</a>.</p>
+    </section>
+</main>

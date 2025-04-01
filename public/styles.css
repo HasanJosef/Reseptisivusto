@@ -1,8 +1,145 @@
 /* Reseptilistaus */
+:root {
+  --paavari: #d69d70; 
+  --toissijainen: #70816f; 
+  --taustavari: #f7f1e3; 
+  --tekstivari: #333333; 
+  --korostusvari: #d35400; 
+}
+
+body {
+  background-color: var(--taustavari);
+  color: var(--tekstivari);
+  font-family: 'Lato', sans-serif;
+  line-height: 1.6;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Playfair Display', serif;
+  color: var(--tekstivari);
+}
+
+.resepti-nimi {
+  font-family: 'Caveat', cursive;
+  font-size: 2rem;
+  color: var(--korostusvari);
+}
+
+h2 img {
+  width: 100%;
+  max-width: 150px; 
+  max-height: 150px; 
+}
+
+a {
+  color: #333333; 
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline; 
+}
+
+.logo {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  border: 2px solid var(--paavari);
+  border-radius: 8px;
+  background-color: var(--korostusvari);
+  color: var(--tekstivari);
+  font-weight: bold;
+  text-decoration: none;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.logo:hover {
+  background-color: var(--toissijainen);
+  color: var(--tekstivari);
+}
+
+nav {
+  display: flex;
+  align-items: center;
+  gap: 1rem; /* Space between logo and search bar */
+}
+
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.5rem 1rem;
+  background-color: var(--paavari);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.navbar-left {
+  display: flex;
+  align-items: center;
+  gap: 1rem; /* Space between logo and back button */
+}
+
+.back-button {
+  display: inline-block;
+  padding: 0.7rem 1rem; 
+  border: 2px solid var(--paavari);
+  border-radius: 8px;
+  background-color: var(--korostusvari);
+  color: var(--tekstivari);
+  font-weight: bold;
+  font-size: 1rem; 
+  text-decoration: none;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.back-button:hover {
+  background-color: var(--toissijainen);
+  color: var(--tekstivari);
+}
+
+.hakupalkki {
+  display: flex;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 25px; /* Make it slightly more rounded */
+  background-color: transparent;
+  box-shadow: none;
+  flex-grow: 1;
+  max-width: 400px;
+  margin-left: auto; /* Align to the right */
+}
+
+.hakupalkki input {
+  border: none; 
+  border-radius: 0; 
+  background-color: white; 
+  padding: 0.5rem;
+  flex: 1;
+  color: var(--tekstivari); 
+}
+
+.hakupalkki button {
+  background-color: var(--korostusvari);
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.hakupalkki button:hover {
+  background-color: var(--toissijainen);
+}
+
 .reseptilista-sivu {
   padding: 2rem;
   max-width: 1200px;
   margin: 0 auto;
+}
+
+.resepti-lista {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); 
+  gap: 1.5rem; 
+  margin-top: 2rem;
 }
 
 .ei-tuloksia {
@@ -11,7 +148,27 @@
   font-size: 1.2rem;
 }
 
-/* Yksittäinen resepti */
+.resepti-kortti {
+  display: block;
+  border: 1px solid var(--toissijainen);
+  border-radius: 8px;
+  padding: 1rem;
+  text-align: center;
+  background-color: #f7f1e3;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.resepti-kortti:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+.resepti-kortti img {
+  margin-bottom: 0.5rem;
+  border-radius: 8px;
+}
+
 .resepti-sivu {
   padding: 2rem;
   max-width: 1200px;
@@ -27,8 +184,25 @@
 
 .resepti-kuva img {
   width: 100%;
+  max-width: 300px; 
+  max-height: 300px; 
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+button {
+  background-color: var(--korostusvari);
+  color: #f7f1e3;
+  border: none;
+  border-radius: 8px;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: box-shadow 0.3s ease;
+}
+
+button:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .ainesosat ul {
@@ -38,7 +212,7 @@
 
 .ainesosat li {
   padding: 0.3rem 0;
-  border-bottom: 1px solid #eee;
+  border-bottom: 1px solid var(--toissijainen);
 }
 
 .ohjeet {
@@ -48,6 +222,7 @@
 
 .video-linkki {
   margin-top: 2rem;
+  color: var(--korostusvari);
 }
 
 .arvostelut {
@@ -59,5 +234,9 @@
 @media (max-width: 768px) {
   .resepti-esitys {
     grid-template-columns: 1fr;
+  }
+
+  .resepti-lista {
+    grid-template-columns: 1fr; 
   }
 }
