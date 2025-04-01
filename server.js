@@ -12,7 +12,6 @@ app.use(express.static("public"));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-// Session setup
 app.use(
   session({
     secret: "your-secret-key",
@@ -29,10 +28,9 @@ app.use((req, res, next) => {
 const API_BASE_URL = "https://www.themealdb.com/api/json/v1/1/";
 const SECRET_KEY = "salainenavain";
 
-// Yhdistetään MySQL-tietokantaan
 const db = mysql.createConnection({
   host: "localhost",
-  user: "root", // Vaihda omaan käyttäjään
+  user: "root",
   password: "",
   database: "respetisivu",
 });
@@ -45,7 +43,6 @@ db.connect((err) => {
   console.log("Yhdistetty MySQL-tietokantaan!");
 });
 
-// Middleware to check if the user is logged in
 function requireLogin(req, res, next) {
   if (!req.session.user) {
     return res.redirect("/login");
@@ -53,7 +50,6 @@ function requireLogin(req, res, next) {
   next();
 }
 
-// Apply the middleware to all routes except login and register
 app.use((req, res, next) => {
   const publicRoutes = ["/login", "/register"];
   if (!publicRoutes.includes(req.path) && !req.session.user) {
@@ -62,32 +58,27 @@ app.use((req, res, next) => {
   next();
 });
 
-// Rekisteröinti
 app.post("/register", async (req, res) => {
   const { email, username, password } = req.body;
 
-  // Tarkistetaan, onko käyttäjänimi jo olemassa tietokannassa
   db.query("SELECT * FROM users WHERE username = ?", [username], async (err, results) => {
     if (err) {
-      console.error("Tietokantavirhe SELECT:", err); // Log SELECT query error
+      console.error("Tietokantavirhe SELECT:", err);
       return res.status(500).send("Tietokantavirhe");
     }
     if (results.length > 0) return res.send("Käyttäjänimi on jo olemassa.");
 
-    // Salasanan hash
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    // Tallennetaan käyttäjä tietokantaan
     db.query(
       "INSERT INTO users (email, username, password) VALUES (?, ?, ?)",
       [email, username, hashedPassword],
       (err, result) => {
         if (err) {
-          console.error("Tietokantavirhe INSERT:", err); // Log INSERT query error
+          console.error("Tietokantavirhe INSERT:", err);
           return res.status(400).json({ message: "Virhe rekisteröinnissä" });
         }
 
-        // Kirjataan käyttäjä sisään ja ohjataan kotisivulle
         req.session.user = username;
         res.redirect("/");
       }
@@ -99,47 +90,35 @@ app.get("/register", (req, res) => {
   res.render("register");
 });
 
-// Kirjautuminen
 app.post("/login", (req, res) => {
   const { username, password } = req.body;
 
-  // Tarkistetaan, onko käyttäjä olemassa tietokannassa
+  if (!username || !password) {
+    return res.render("login", { virhe: "Käyttäjänimi ja salasana ovat pakollisia." });
+  }
+
   db.query("SELECT * FROM users WHERE username = ?", [username], async (err, results) => {
-    if (err || results.length === 0) return res.status(401).json({ message: "Virheelliset tunnukset" });
+    if (err || results.length === 0) {
+      return res.render("login", { virhe: "Virheelliset tunnukset." });
+    }
 
     const dbUser = results[0];
     const isMatch = await bcrypt.compare(password, dbUser.password);
 
-    if (!isMatch) return res.status(401).json({ message: "Virheelliset tunnukset" });
+    if (!isMatch) {
+      return res.render("login", { virhe: "Virheelliset tunnukset." });
+    }
 
-    // Kirjataan käyttäjä sisään ja ohjataan kotisivulle
     req.session.user = username;
     res.redirect("/");
   });
 });
 
-// Kirjautuminen ulos
 app.post("/logout", (req, res) => {
   req.session.destroy((err) => {
     if (err) return res.status(500).send("Virhe uloskirjautumisessa");
     res.redirect("/login");
   });
-});
-
-// Token-tarkistus middleware
-function authenticateToken(req, res, next) {
-  const token = req.headers["authorization"];
-  if (!token) return res.status(403).json({ message: "Access denied" });
-  jwt.verify(token, SECRET_KEY, (err, user) => {
-    if (err) return res.status(403).json({ message: "Invalid token" });
-    req.user = user;
-    next();
-  });
-}
-
-// Suojattu reitti
-app.get("/protected", authenticateToken, (req, res) => {
-  res.json({ message: `Welcome, user ${req.user.id}!` });
 });
 
 app.get("/", async (req, res) => {
@@ -184,7 +163,6 @@ app.get("/resepti/:id", async (req, res) => {
       return res.status(404).render("recipe", { resepti: null });
     }
 
-    // Extract ingredients and measurements
     const ainekset = [];
     for (let i = 1; i <= 20; i++) {
       const aines = meal[`strIngredient${i}`];
