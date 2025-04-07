@@ -1,4 +1,3 @@
-/* Reseptilistaus */
 :root {
   --paavari: #d69d70; 
   --toissijainen: #70816f; 
@@ -60,7 +59,7 @@ a:hover {
 nav {
   display: flex;
   align-items: center;
-  gap: 1rem; /* Space between logo and search bar */
+  gap: 1rem; 
 }
 
 .navbar {
@@ -75,7 +74,7 @@ nav {
 .navbar-left {
   display: flex;
   align-items: center;
-  gap: 1rem; /* Space between logo and back button */
+  gap: 1rem; 
 }
 
 .back-button {
@@ -101,12 +100,12 @@ nav {
   gap: 0.5rem;
   padding: 0.5rem 1rem;
   border: none;
-  border-radius: 25px; /* Make it slightly more rounded */
+  border-radius: 25px; 
   background-color: transparent;
   box-shadow: none;
   flex-grow: 1;
   max-width: 400px;
-  margin-left: auto; /* Align to the right */
+  margin-left: auto; 
 }
 
 .hakupalkki input {
@@ -229,6 +228,34 @@ button:hover {
   margin-top: 3rem;
   padding-top: 2rem;
   border-top: 1px solid var(--paavari);
+}
+
+.arvostelu {
+  margin-bottom: 1rem;
+  padding: 1rem;
+  border: 1px solid var(--toissijainen);
+  border-radius: 8px;
+  background-color: var(--taustavari);
+}
+
+.arvostelu p {
+  margin: 0.5rem 0;
+}
+
+form {
+  margin-top: 1rem;
+}
+
+form label {
+  display: block;
+  margin: 0.5rem 0 0.2rem;
+}
+
+form textarea {
+  width: 100%;
+  border: 1px solid var(--toissijainen);
+  border-radius: 4px;
+  padding: 0.5rem;
 }
 
 @media (max-width: 768px) {

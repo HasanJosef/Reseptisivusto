@@ -33,10 +33,32 @@
                 
                 <div class="arvostelut">
                     <h2>Arvostelut</h2>
-                    <p class="keskiarvo">Keskiarvo: Tähdet tulevat sprintissä 3</p>
+                    <p class="keskiarvo">Keskiarvo: <%= resepti.keskiarvo || "Ei arvosteluja" %> tähteä</p>
                     <div class="arvostelulista">
-                        <p>Arvostelut tulevat sprintissä 3</p>
+                        <% if (resepti.arvostelut && resepti.arvostelut.length > 0) { %>
+                            <% resepti.arvostelut.forEach(arvostelu => { %>
+                                <div class="arvostelu">
+                                    <p><strong>Tähdet:</strong> <%= arvostelu.tahdet %></p>
+                                    <p><strong>Kommentti:</strong> <%= arvostelu.kommentti %></p>
+                                </div>
+                            <% }); %>
+                        <% } else { %>
+                            <p>Ei arvosteluja vielä.</p>
+                        <% } %>
                     </div>
+                    <form action="/resepti/<%= resepti.idMeal %>/arvostele" method="POST">
+                        <label for="tahdet">Tähdet (1-5):</label>
+                        <select id="tahdet" name="tahdet" required>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                        </select>
+                        <label for="kommentti">Kommentti:</label>
+                        <textarea id="kommentti" name="kommentti" rows="3"></textarea>
+                        <button type="submit">Lähetä arvostelu</button>
+                    </form>
                 </div>
             </div>
         </article>
