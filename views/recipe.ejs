@@ -1,10 +1,10 @@
-<%- include('partials/header') %>
+<%- include('partials/header', { showSearchBar: false, showLogoutButton: true }) %>
 
 <main class="resepti-sivu">
     <% if (resepti) { %>
         <article class="resepti-esitys">
             <div class="resepti-kuva">
-                <img src="<%= resepti.strMealThumb %>" alt="<%= resepti.strMeal %>">
+                <img src="<%= resepti.strMealThumb %>" alt="<%= resepti.strMeal %>" class="recipe-image">
             </div>
             
             <div class="resepti-tiedot">

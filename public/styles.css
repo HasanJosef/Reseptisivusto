@@ -118,8 +118,7 @@ nav {
 .nav-right {
   display: flex;
   align-items: center;
-  gap: 1rem;
-  margin-left: auto; /* Push to the right */
+  gap: 1.5rem; /* Increased gap for more spacing */
 }
 
 .nav-right h1 {
@@ -648,6 +647,17 @@ form textarea {
 #star-rating label:hover,
 #star-rating label:hover ~ label {
   color: gold;
+}
+
+.recipe-image {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 20px auto; /* Adds spacing around the image */
+}
+
+.recipe-header {
+  margin-top: 20px; /* Ensures the header doesn't overlap with the image */
 }
 
 @media (max-width: 768px) {
