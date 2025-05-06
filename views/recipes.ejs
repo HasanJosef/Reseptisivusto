@@ -1,7 +1,11 @@
 <%- include('partials/header') %>
 
 <main class="reseptilista-sivu">
-    <h1>Löydetyt reseptit</h1>
+    <h2 class="goodgirl">Löydetyt reseptit</h2>
+    
+    <% if (haku && searchType) { %>
+        <p class="hakutieto">Hakutyyppi: <%= searchType === 'name' ? 'Nimi' : 'Ainesosa' %>, Hakusana: "<%= haku %>"</p>
+    <% } %>
     
     <% if (reseptit && reseptit.length > 0) { %>
         <div class="resepti-lista">
@@ -15,4 +19,4 @@
     <% } else { %>
         <p class="ei-tuloksia">Ei reseptejä löytynyt. Kokeile toista hakusanaa.</p>
     <% } %>
-</main> 
+</main>

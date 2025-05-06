@@ -71,6 +71,10 @@ app.use((req, res, next) => {
 app.post("/register", async (req, res) => {
   const { email, username, password } = req.body;
 
+  if (!password) {
+    return res.status(400).send("Salasana on pakollinen.");
+  }
+
   db.query("SELECT * FROM users WHERE username = ?", [username], async (err, results) => {
     if (err) {
       console.error("Tietokantavirhe SELECT:", err);
@@ -89,7 +93,7 @@ app.post("/register", async (req, res) => {
           return res.status(400).json({ message: "Virhe rekisteröinnissä" });
         }
 
-        req.session.user = username;
+        req.session.user = { id: result.insertId, username };
         res.redirect("/");
       }
     );
@@ -145,27 +149,24 @@ app.get("/", async (req, res) => {
   }
 });
 
-// Reitti reseptien hakemiseen nimen tai kategorian perusteella
+// Reitti reseptien hakemiseen nimen tai ainesosan perusteella
 app.get("/reseptit", async (req, res) => {
-  const { haku, kategoria } = req.query;
+  const { haku, searchType } = req.query;
 
   try {
-    let url = `${API_BASE_URL}search.php?s=`;
-    if (haku) {
-      url += haku;
-    } else if (kategoria) {
-      url = `${API_BASE_URL}filter.php?c=${kategoria}`;
+    let url;
+    if (searchType === "ingredient") {
+      url = `${API_BASE_URL}filter.php?i=${haku}`;
+    } else if (searchType === "category") {
+      url = `${API_BASE_URL}filter.php?c=${haku}`;
+    } else {
+      url = `${API_BASE_URL}search.php?s=${haku}`;
     }
 
     const vastaus = await axios.get(url);
-    let reseptit = vastaus.data.meals;
+    const reseptit = vastaus.data.meals;
 
-    if (!reseptit && haku) {
-      const ingredientResponse = await axios.get(`${API_BASE_URL}filter.php?i=${haku}`);
-      reseptit = ingredientResponse.data.meals;
-    }
-
-    res.render("recipes", { reseptit });
+    res.render("recipes", { reseptit, haku, searchType }); // Pass haku and searchType to the template
   } catch (virhe) {
     console.error("Virhe haettaessa reseptejä:", virhe);
     res.status(500).send("Virhe haettaessa reseptejä");
@@ -244,12 +245,10 @@ app.get("/resepti/:id", async (req, res) => {
               });
             }
 
-            const arvostelut = reviewResults.length > 0
-              ? reviewResults.map((row) => ({
-                  tahdet: row.tahdet,
-                  kommentti: row.kommentti,
-                }))
-              : [];
+            const arvostelut = reviewResults.map((row) => ({
+              tahdet: row.tahdet,
+              kommentti: row.kommentti,
+            }));
 
             const resepti = {
               ...meal,

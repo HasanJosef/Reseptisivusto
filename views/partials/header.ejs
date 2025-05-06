@@ -9,18 +9,33 @@
       href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Playfair+Display:wght@700&display=swap"
       rel="stylesheet"
     />
+    <link rel="icon" type="image/x-icon" href="/kuvat/reseptiguru-logo.ico" />
   </head>
   <body>
     <header>
-      <nav>
-        <a href="/" class="logo">ReseptiGuru</a>
-        <% if (typeof currentRoute !== 'undefined' && currentRoute !== '/login' && currentRoute !== '/register') { %>
-          <div class="logout">
-            <form action="/logout" method="POST">
-              <button type="submit">Kirjaudu ulos</button>
+      <nav class="navbarr">
+        <div class="nav-left">
+          <a href="/" class="logo">
+            <img src="/kuvat/reseptiguru-logo.png" alt="ReseptiGuru Logo" class="logo-image" />
+          </a>
+          <% if (typeof currentRoute !== 'undefined' && currentRoute !== '/login' && currentRoute !== '/register') { %>
+            <form action="/logout" method="POST" class="logout-form">
+              <button type="submit" class="logout-button">Kirjaudu ulos</button>
             </form>
-          </div>
-        <% } %>
+          <% } %>
+        </div>
+        <div class="nav-right">
+          <% if (typeof currentRoute !== 'undefined' && currentRoute !== '/login' && currentRoute !== '/register') { %>
+            <form class="hakulomake" action="/reseptit" method="GET">
+              <select name="searchType">
+                <option value="name">Nimi</option>
+                <option value="ingredient">Ainesosa</option>
+              </select>
+              <input type="text" name="haku" placeholder="Etsi reseptiä..." required>
+              <button type="submit">Hae</button>
+            </form>
+          <% } %>
+        </div>
       </nav>
     </header>
   </body>

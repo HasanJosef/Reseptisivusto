@@ -21,15 +21,13 @@
                 
                 <section class="ohjeet">
                     <h2>Valmistusohjeet</h2>
-                    <p><%= resepti.strInstructions.replace(/\r\n/g, '<br>') %></p>
+                    <p><%= resepti.strInstructions.replace(/\r\n/g, '') %></p>
                 </section>
                 
-                <% if (resepti.strYoutube) { %>
-                    <div class="video-linkki">
-                        <h2>Video-ohje</h2>
-                        <a href="<%= resepti.strYoutube %>" target="_blank">Katso YouTube-video</a>
-                    </div>
-                <% } %>
+                <div class="linkki-reseptiin">
+                    <h2>Alkuperäinen resepti</h2>
+                    <a href="https://www.themealdb.com/meal/<%= resepti.idMeal %>" target="_blank" class="themealdb-link">Katso resepti TheMealDB:ssä</a>
+                </div>
                 
                 <div class="arvostelut">
                     <h2>Arvostelut</h2>
@@ -38,7 +36,14 @@
                         <% if (resepti.arvostelut && resepti.arvostelut.length > 0) { %>
                             <% resepti.arvostelut.forEach(arvostelu => { %>
                                 <div class="arvostelu">
-                                    <p><strong>Tähdet:</strong> <%= arvostelu.tahdet %></p>
+                                    <p><strong>Tähdet:</strong> 
+                                        <% for (let i = 0; i < arvostelu.tahdet; i++) { %>
+                                            ★
+                                        <% } %>
+                                        <% for (let i = arvostelu.tahdet; i < 5; i++) { %>
+                                            ☆
+                                        <% } %>
+                                    </p>
                                     <p><strong>Kommentti:</strong> <%= arvostelu.kommentti %></p>
                                 </div>
                             <% }); %>
@@ -57,7 +62,7 @@
                         </select>
                         <label for="kommentti">Kommentti:</label>
                         <textarea id="kommentti" name="kommentti" rows="3"></textarea>
-                        <button type="submit">Lähetä arvostelu</button>
+                        <button type="submit" style="color: #333333;">Lähetä arvostelu</button>
                     </form>
                 </div>
             </div>
